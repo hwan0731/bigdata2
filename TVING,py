@@ -126,3 +126,30 @@ try:
 finally:
     # 웹 드라이버 종료
     driver.quit()
+import requests
+from bs4 import BeautifulSoup
+
+def fetch_tving_drama_rankings():
+    # 티빙 드라마 순위 페이지 URL (URL을 확인하여 올바른 주소 입력)
+    url = 'https://www.tving.com/ranking/drama'
+
+    # HTTP 요청 보내기
+    response = requests.get(url)
+
+    # 요청이 성공적으로 완료되었는지 확인
+    if response.status_code == 200:
+        # HTML 콘텐츠 파싱
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # 드라마 순위 리스트 추출
+        # 아래 CSS 셀렉터는 실제 티빙 페이지의 구조에 따라 수정해야 할 수 있습니다
+        rankings = soup.select('.title')  # 드라마 제목을 포함하는 CSS 클래스
+
+        # 상위 10개 드라마 출력
+        for i, item in enumerate(rankings[:10], start=1):
+            print(f"{i}위: {item.get_text(strip=True)}")
+    else:
+        print(f'웹 페이지 요청 실패: {response.status_code}')
+
+# 함수 호출하여 드라마 순위 수집
+fetch_tving_drama_rankings()
