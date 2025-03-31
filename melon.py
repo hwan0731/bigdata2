@@ -45,3 +45,6 @@ driver.quit()
 for ranking in rankings:
     print(f"{ranking['rank']}위: {ranking['title']} - {ranking['artist']}")
     pip install selenium
+
+ai_song = random.choice(songs)
+print(f"추천곡은 {ai_song[1]} - {ai_song[2]} 입니다."
